@@ -48,6 +48,7 @@ class MyAccountContainer extends Component {
         {currentUser ? (
           events.map(eventDetails => (
             <EventCard
+              isTech={currentUser.is_technician}
               showDeleteDialog={this.showDeleteDialog}
               key={eventDetails.id}
               event={eventDetails}

@@ -49,9 +49,7 @@ const getTechById = id => fetch(`${TECH_URL}/${id}`).then(resp => resp.json())
 const getEventById = id => fetch(`${EVENT_URL}/${id}`).then(resp => resp.json())
 
 const deleteEvent = id =>
-  fetch(`${EVENT_URL}/${id}`, { headers: { method: "DELETE" } }).then(resp =>
-    resp.json()
-  )
+  fetch(`${EVENT_URL}/${id}`, { method: "DELETE" }).then(resp => resp.json())
 
 export default {
   signUpTech,

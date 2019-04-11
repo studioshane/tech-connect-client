@@ -51,7 +51,7 @@ function EventCard(props) {
         <CardActions>
           <Button size='small'>More Details</Button>
           <Button onClick={() => props.showDeleteDialog(event.id)} size='small'>
-            Delete Event
+            {props.isTech ? "Cancel Event" : "Delete Event"}
           </Button>
         </CardActions>
       </Card>

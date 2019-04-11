@@ -21,9 +21,16 @@ class Calendar extends React.Component {
       API.getTechnicianEvents(this.props.match.params.id).then(events =>
         this.setState({ techEvents: this.changeTitleToUnavailable(events) })
       )
-    } else if (this.props.currentUser) {
+    } else if (
+      this.props.currentUser &&
+      !this.props.currentUser.is_technician
+    ) {
       API.getProducerEvents(this.props.currentUser.id).then(events =>
         this.setState({ techEvents: this.changeTitleToClient(events) })
+      )
+    } else if (this.props.currentUser && this.props.currentUser.is_technician) {
+      API.getTechnicianEvents(this.props.currentUser.id).then(techEvents =>
+        this.setState({ techEvents })
       )
     }
   }
@@ -33,9 +40,11 @@ class Calendar extends React.Component {
   //   return this.state.techEvents
   // }
 
+  //used when a producer is looking at a tech's events
   changeTitleToUnavailable = events =>
     events.map(event => Object.assign({}, event, { title: "Unavailable" }))
 
+  //used when a producer is looking at their own events
   changeTitleToClient = events =>
     events.map(event => Object.assign({}, event, { title: event.client }))
 
