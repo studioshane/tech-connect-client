@@ -13,3 +13,5 @@ export const formatDate = date => {
 
   return formatDate + " - " + formatTime
 }
+
+export const disciplines = ["audio", "video", "lighting", "general"]

@@ -4,8 +4,6 @@ import {
   Button,
   CssBaseline,
   FormControl,
-  FormControlLabel,
-  Checkbox,
   Input,
   InputLabel,
   Paper,
@@ -14,7 +12,6 @@ import {
 import PropTypes from "prop-types"
 import withStyles from "@material-ui/core/styles/withStyles"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
-import API from "../Adaptors/API"
 import styles from "../Config/config"
 
 class LoginForm extends React.Component {

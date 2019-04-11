@@ -7,6 +7,7 @@ import CardContent from "@material-ui/core/CardContent"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import { formatDate } from "../lib/helper"
+import DeleteEventDialog from "../Components/DeleteEventDialog"
 
 const styles = {
   card: {
@@ -27,29 +28,34 @@ const styles = {
 
 function EventCard(props) {
   const { classes, event } = props
-  const bull = <span className={classes.bullet}>•</span>
+  // const bull = <span className={classes.bullet}>•</span>
 
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color='textSecondary'
-          gutterBottom
-        >
-          {event.client}
-        </Typography>
-        <Typography variant='h5' component='h2'>
-          {event.venue}
-        </Typography>
-        <Typography className={classes.pos} color='textSecondary'>
-          {formatDate(event.start)} - {formatDate(event.end)}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size='small'>More Details</Button>
-      </CardActions>
-    </Card>
+    <div>
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography
+            className={classes.title}
+            color='textSecondary'
+            gutterBottom
+          >
+            {event.client}
+          </Typography>
+          <Typography variant='h5' component='h2'>
+            {event.venue}
+          </Typography>
+          <Typography className={classes.pos} color='textSecondary'>
+            {formatDate(event.start)} - {formatDate(event.end)}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size='small'>More Details</Button>
+          <Button onClick={() => props.showDeleteDialog(event.id)} size='small'>
+            Delete Event
+          </Button>
+        </CardActions>
+      </Card>
+    </div>
   )
 }
 

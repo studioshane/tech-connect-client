@@ -1,11 +1,14 @@
-import React, { Component, Fragment, Container } from "react"
-import { firstName } from "../lib/helper"
+import React, { Component } from "react"
 import API from "../Adaptors/API"
 import EventCard from "../Components/EventCard"
+import DeleteEventDialog from "../Components/DeleteEventDialog"
+import { Typography } from "@material-ui/core"
 
 class MyAccountContainer extends Component {
   state = {
-    events: []
+    events: [],
+    deleteDialog: false,
+    selectedEventId: undefined
   }
 
   componentDidMount = () => {
@@ -21,6 +24,22 @@ class MyAccountContainer extends Component {
     }
   }
 
+  showDeleteDialog = eventId => {
+    this.setState({ deleteDialog: true, selectedEventId: eventId })
+  }
+
+  closeDeleteDialog = () => {
+    this.setState({ deleteDialog: false })
+  }
+
+  deleteEvent = () =>
+    API.deleteEvent(this.state.selectedEventId).then(resp =>
+      this.setState({
+        deleteDialog: false,
+        events: this.state.events.filter(event => event.id !== resp.id)
+      })
+    )
+
   render() {
     const { events } = this.state
     const { currentUser } = this.props
@@ -28,10 +47,23 @@ class MyAccountContainer extends Component {
       <>
         {currentUser ? (
           events.map(eventDetails => (
-            <EventCard key={eventDetails.id} event={eventDetails} />
+            <EventCard
+              showDeleteDialog={this.showDeleteDialog}
+              key={eventDetails.id}
+              event={eventDetails}
+            />
           ))
         ) : (
-          <h1>You must be logged in to View This</h1>
+          <Typography align='center'>
+            You must be logged in to view this
+          </Typography>
+        )}
+        {this.state.deleteDialog && (
+          <DeleteEventDialog
+            open={this.state.deleteDialog}
+            closeDeleteDialog={this.closeDeleteDialog}
+            deleteEvent={this.deleteEvent}
+          />
         )}
       </>
     )
