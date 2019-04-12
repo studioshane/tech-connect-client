@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import { formatDate } from "../lib/helper"
-import DeleteEventDialog from "../Components/DeleteEventDialog"
 
 const styles = {
   card: {
@@ -32,14 +31,17 @@ function EventCard(props) {
 
   return (
     <div>
-      <Card className={classes.card}>
+      <Card
+        style={{ minWidth: "230px", maxWidth: "300px", minHeight: "280px" }}
+        className={classes.card}
+      >
         <CardContent>
           <Typography
             className={classes.title}
             color='textSecondary'
             gutterBottom
           >
-            {event.client}
+            {props.is_tech ? event.title : event.client}
           </Typography>
           <Typography variant='h5' component='h2'>
             {event.venue}

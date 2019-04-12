@@ -1,13 +1,6 @@
 import React from "react"
-import {
-  Card,
-  CardActions,
-  CardMedia,
-  Button,
-  CardContent,
-  Typography
-} from "@material-ui/core"
-import { Theaters, Mic, Highlight, InsertEmoticon } from "@material-ui/icons"
+import { Card, Button, CardContent, Typography } from "@material-ui/core"
+import { Theaters, Highlight, InsertEmoticon } from "@material-ui/icons"
 import { Link } from "react-router-dom"
 
 const TechnicianCard = props => {

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import API from "../Adaptors/API"
 import EventCard from "../Components/EventCard"
 import DeleteEventDialog from "../Components/DeleteEventDialog"
-import { Typography } from "@material-ui/core"
+import { Typography, Grid } from "@material-ui/core"
 
 class MyAccountContainer extends Component {
   state = {
@@ -45,27 +45,31 @@ class MyAccountContainer extends Component {
     const { currentUser } = this.props
     return (
       <>
-        {currentUser ? (
-          events.map(eventDetails => (
-            <EventCard
-              isTech={currentUser.is_technician}
-              showDeleteDialog={this.showDeleteDialog}
-              key={eventDetails.id}
-              event={eventDetails}
+        <Grid container spacing={24} style={{ padding: 24 }}>
+          {currentUser ? (
+            events.map(eventDetails => (
+              <Grid item xs={6} sm={4} lg={3}>
+                <EventCard
+                  isTech={currentUser.is_technician}
+                  showDeleteDialog={this.showDeleteDialog}
+                  key={eventDetails.id}
+                  event={eventDetails}
+                />
+              </Grid>
+            ))
+          ) : (
+            <Typography align='center'>
+              You must be logged in to view this
+            </Typography>
+          )}
+          {this.state.deleteDialog && (
+            <DeleteEventDialog
+              open={this.state.deleteDialog}
+              closeDeleteDialog={this.closeDeleteDialog}
+              deleteEvent={this.deleteEvent}
             />
-          ))
-        ) : (
-          <Typography align='center'>
-            You must be logged in to view this
-          </Typography>
-        )}
-        {this.state.deleteDialog && (
-          <DeleteEventDialog
-            open={this.state.deleteDialog}
-            closeDeleteDialog={this.closeDeleteDialog}
-            deleteEvent={this.deleteEvent}
-          />
-        )}
+          )}
+        </Grid>
       </>
     )
   }
