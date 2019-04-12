@@ -11,44 +11,36 @@ import Calendar from "./Components/Calendar"
 
 class App extends Component {
   state = {
-    currentUser: undefined
+    currentUser: window.localStorage.getItem("user")
+      ? JSON.parse(window.localStorage.getItem("user"))
+      : undefined
   }
 
   logout = () => {
     this.setState({ currentUser: undefined })
+    window.localStorage.removeItem("user")
+  }
+
+  handleUserResponse = user => {
+    if (user.hasOwnProperty("error")) {
+      alert("Uh-oh, something went wrong")
+    } else {
+      this.setState({ currentUser: user })
+      window.localStorage.setItem("user", JSON.stringify(user))
+      this.props.history.push("/myaccount")
+    }
   }
 
   signUp = userObj => {
     if (userObj.value === "technician") {
-      API.signUpTech(userObj).then(user => {
-        if (user.hasOwnProperty("error")) {
-          alert("Uh-oh, something went wrong")
-        } else {
-          this.setState({ currentUser: user })
-          this.props.history.push("/myaccount")
-        }
-      })
+      API.signUpTech(userObj).then(this.handleUserResponse)
     } else {
-      API.signUpProd(userObj).then(user => {
-        if (user.hasOwnProperty("error")) {
-          alert("Uh-oh, something went wrong")
-        } else {
-          this.setState({ currentUser: user })
-          this.props.history.push("/myaccount")
-        }
-      })
+      API.signUpProd(userObj).then(this.handleUserResponse)
     }
   }
 
   login = userObj => {
-    API.login(userObj).then(user => {
-      if (user.hasOwnProperty("error")) {
-        alert("Uh-oh, something went wrong")
-      } else {
-        this.setState({ currentUser: user })
-        this.props.history.push("/myaccount")
-      }
-    })
+    API.login(userObj).then(this.handleUserResponse)
   }
 
   // login = userObj => {
