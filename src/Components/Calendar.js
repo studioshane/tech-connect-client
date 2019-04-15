@@ -35,11 +35,6 @@ class Calendar extends React.Component {
     }
   }
 
-  // showEvents = () => {
-  //   if (!this.props.match.params.id) return this.props.currentUser.events
-  //   return this.state.techEvents
-  // }
-
   //used when a producer is looking at a tech's events
   changeTitleToUnavailable = events =>
     events.map(event => Object.assign({}, event, { title: "Unavailable" }))
@@ -48,13 +43,15 @@ class Calendar extends React.Component {
   changeTitleToClient = events =>
     events.map(event => Object.assign({}, event, { title: event.client }))
 
-  handleSelect = ({ start, end }) => {
+  handleSelect = ({ start }) => {
     this.setState({ eventPopup: true, selectedDate: start })
   }
 
   closePopup = () => {
     this.setState({ eventPopup: false })
   }
+
+  handleDoubleClick = ({ start, id }) => this.props.history.push(`events/${id}`)
 
   createEvent = event => {
     API.createEvent({ ...event, ...this.props.currentUser }).then(event =>
@@ -70,21 +67,31 @@ class Calendar extends React.Component {
   render() {
     const { currentUser } = this.props
     return (
-      <div style={{ padding: 24, height: "500px" }}>
+      <div
+        style={{
+          padding: 16,
+          height: "600px",
+          maxWidth: 1000,
+          margin: "auto",
+          boxShadow: "grey 5px 5px 5px",
+          border: "2px",
+          marginTop: "30px"
+        }}
+      >
         {currentUser ? (
           <Fragment>
             <BigCalendar
               popup
               selectable={!this.props.match.params.id ? true : false}
               events={this.state.techEvents}
-              // views={allViews}
+              views={["month"]}
               step={60}
               showMultiDayTimes
               defaultDate={new Date()}
               localizer={localizer}
-              onDoubleClickEvent={this.doubleClick}
-              onSelectEvent={event => console.log(event)}
+              // onSelectEvent={event => console.log(event)}
               onSelectSlot={this.handleSelect}
+              onDoubleClickEvent={this.handleDoubleClick}
             />
 
             {this.state.eventPopup && (

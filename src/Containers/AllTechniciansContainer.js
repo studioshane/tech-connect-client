@@ -1,10 +1,22 @@
 import React, { Component } from "react"
 import API from "../Adaptors/API"
 import TechnicianCard from "../Components/TechnicianCard"
-import { TextField, Grid, Typography, InputLabel } from "@material-ui/core"
+import {
+  TextField,
+  Grid,
+  Typography,
+  InputLabel,
+  Button,
+  Menu,
+  MenuItem
+} from "@material-ui/core"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Search from "@material-ui/icons/Search"
 import { disciplines } from "../lib/helper"
+import PopupState, {
+  bindTrigger,
+  bindMenu
+} from "material-ui-popup-state/index"
 
 class AllTechniciansContainer extends Component {
   state = {
@@ -14,10 +26,21 @@ class AllTechniciansContainer extends Component {
     disciplineFilters: []
   }
 
-  componentDidMount = () =>
-    API.getAllTechnicians().then(allTechnicians =>
-      this.setState({ allTechnicians, loading: false })
-    )
+  componentDidMount = () => {
+    if (!this.props.match.params.id) {
+      API.getAllTechnicians().then(allTechnicians =>
+        this.setState({ allTechnicians, loading: false })
+      )
+    } else {
+      API.getAvailableTechnicians(this.props.match.params.id).then(
+        availableTechnicians =>
+          this.setState({
+            allTechnicians: availableTechnicians,
+            loading: false
+          })
+      )
+    }
+  }
 
   searchByName = () => {
     const { searchField, allTechnicians } = this.state
@@ -46,9 +69,16 @@ class AllTechniciansContainer extends Component {
     }
   }
 
-  handleChange = event => {
-    this.setState({ disciplineFilters: event.target.value })
+  bookTechnician = technicianId => {
+    const eventId = this.props.match.params.id
+    API.addTechToEvent(eventId, technicianId).then(
+      this.props.history.push(`/events/${eventId}`)
+    )
   }
+
+  // handleChange = event => {
+  //   this.setState({ disciplineFilters: event.target.value })
+  // }
 
   render() {
     return (
@@ -59,49 +89,46 @@ class AllTechniciansContainer extends Component {
           color='inherit'
           align='center'
         >
-          All Technicians
+          {this.props.match.params.id
+            ? "Available Technicians"
+            : "All Technicians"}
         </Typography>
-
-        <Search />
 
         <TextField
           style={{ padding: 24 }}
           placeholder='search by name'
           value={this.state.searchField}
           onChange={this.handleChange}
-        />
-        <InputLabel htmlFor='select-multiple-checkbox'>
-          Filter by Discipline
-        </InputLabel>
-        {/* <Select
-          onChange={this.handleFilter}
-          multiple
-          value={this.state.disciplineFilters}
-          renderValue={selected => {
-            if (selected.length === 0) {
-              return <em>Filter by discipline</em>
-            }
-
-            return selected.join(", ")
-          }}
-          input={<Input id='select-multiple-checkbox' />}
-          placeholder='filter technicians'
         >
-          {disciplines.map(name => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={this.state.disciplineFilters.includes(name)} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select> */}
+          <Search />
+        </TextField>
+
+        <PopupState variant='popover' popupId='demo-popup-menu'>
+          {popupState => (
+            <React.Fragment>
+              <Button variant='contained' {...bindTrigger(popupState)}>
+                Open Menu
+              </Button>
+              <Menu {...bindMenu(popupState)}>
+                <MenuItem onClick={popupState.close}>Cake</MenuItem>
+                <MenuItem onClick={popupState.close}>Death</MenuItem>
+              </Menu>
+            </React.Fragment>
+          )}
+        </PopupState>
 
         <Grid container spacing={24} style={{ padding: 24 }}>
           {this.state.loading ? (
             <CircularProgress style={{ margin: "auto" }} align='center' />
           ) : (
             this.searchByName().map(currentTech => (
-              <Grid item xs={6} sm={4} lg={3}>
-                <TechnicianCard key={currentTech.id} tech={currentTech} />
+              <Grid key={currentTech.id} item xs={6} sm={4} lg={3}>
+                <TechnicianCard
+                  bookTechnician={this.bookTechnician}
+                  addTechnician={this.props.addTechnician}
+                  key={currentTech.id}
+                  tech={currentTech}
+                />
               </Grid>
             ))
           )}

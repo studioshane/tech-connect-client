@@ -9,6 +9,9 @@ const getAllTechnicians = () => fetch(TECH_URL).then(resp => resp.json())
 const getTechnicianEvents = id =>
   fetch(TECH_URL + `/${id}/events`).then(resp => resp.json())
 
+const getAvailableTechnicians = id =>
+  fetch(EVENT_URL + `/${id}/available_technicians`).then(resp => resp.json())
+
 const getProducerEvents = id =>
   fetch(PROD_URL + `/${id}/events`).then(resp => resp.json())
 
@@ -51,6 +54,20 @@ const getEventById = id => fetch(`${EVENT_URL}/${id}`).then(resp => resp.json())
 const deleteEvent = id =>
   fetch(`${EVENT_URL}/${id}`, { method: "DELETE" }).then(resp => resp.json())
 
+const removeTechFromEvent = (eventId, techId) =>
+  fetch(`${EVENT_URL}/${eventId}/removetechnician`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: eventId, technician: { id: techId } })
+  }).then(resp => resp.json())
+
+const addTechToEvent = (eventId, techId) =>
+  fetch(`${EVENT_URL}/${eventId}/addtechnician`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: eventId, technician_id: techId })
+  }).then(resp => resp.json())
+
 export default {
   signUpTech,
   signUpProd,
@@ -61,5 +78,8 @@ export default {
   login,
   getTechnicianEvents,
   getProducerEvents,
-  deleteEvent
+  deleteEvent,
+  removeTechFromEvent,
+  addTechToEvent,
+  getAvailableTechnicians
 }

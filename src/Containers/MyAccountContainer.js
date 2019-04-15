@@ -2,13 +2,15 @@ import React, { Component } from "react"
 import API from "../Adaptors/API"
 import EventCard from "../Components/EventCard"
 import DeleteEventDialog from "../Components/DeleteEventDialog"
-import { Typography, Grid } from "@material-ui/core"
+import { Typography, Grid, Button, Fab } from "@material-ui/core"
+import { sortDatesLowToHigh, sortDatesHighToLow } from "../lib/helper"
 
 class MyAccountContainer extends Component {
   state = {
     events: [],
     deleteDialog: false,
-    selectedEventId: undefined
+    selectedEventId: undefined,
+    upcomingEvents: true
   }
 
   componentDidMount = () => {
@@ -18,9 +20,9 @@ class MyAccountContainer extends Component {
         this.setState({ events: techEvents })
       )
     } else if (currentUser) {
-      API.getProducerEvents(currentUser.id).then(prodEvents =>
-        this.setState({ events: prodEvents })
-      )
+      API.getProducerEvents(currentUser.id)
+        .then(prodEvents => this.setState({ events: prodEvents }))
+        .then(console.log(this.state.events))
     }
   }
 
@@ -40,15 +42,63 @@ class MyAccountContainer extends Component {
       })
     )
 
+  removeTechFromEvent = () => {
+    API.removeTechFromEvent(
+      this.state.selectedEventId,
+      this.props.currentUser.id
+    ).then(removedEvent =>
+      this.setState({
+        deleteDialog: false,
+        events: this.state.events.filter(event => event.id !== removedEvent.id)
+      })
+    )
+  }
+
+  sortedEvents = events => {
+    if (this.state.upcomingEvents) {
+      return events
+        .filter(event => new Date(event.end) > new Date())
+        .sort(sortDatesLowToHigh)
+    } else {
+      return events
+        .filter(event => new Date(event.start) < new Date())
+        .sort(sortDatesHighToLow)
+    }
+  }
+
+  handleToggle = () => {
+    this.setState({ upcomingEvents: !this.state.upcomingEvents })
+  }
+
   render() {
     const { events } = this.state
     const { currentUser } = this.props
     return (
       <>
-        <Grid container spacing={24} style={{ padding: 24 }}>
+        <Typography style={{ marginTop: 20 }} variant='h4' align='center'>
+          My Events
+        </Typography>
+        <div
+          style={{
+            padding: 8,
+            position: "absolute",
+            right: "50px"
+          }}
+        >
+          <Fab variant='extended' size='small' onClick={this.handleToggle}>
+            {this.state.upcomingEvents
+              ? "Show Previous Events"
+              : "Show Upcoming Events"}
+          </Fab>
+        </div>
+        <Grid
+          container
+          spacing={24}
+          style={{ marginTop: "60px", padding: 24, minWidth: 600 }}
+        >
           {currentUser ? (
-            events.map(eventDetails => (
-              <Grid item xs={6} sm={4} lg={3}>
+            this.sortedEvents(events).map(eventDetails => (
+              <Grid key={eventDetails.id} item xs={6} sm={4} lg={3}>
                 <EventCard
                   isTech={currentUser.is_technician}
                   showDeleteDialog={this.showDeleteDialog}
@@ -64,9 +114,11 @@ class MyAccountContainer extends Component {
           )}
           {this.state.deleteDialog && (
             <DeleteEventDialog
+              isTech={this.props.currentUser.is_technician}
               open={this.state.deleteDialog}
               closeDeleteDialog={this.closeDeleteDialog}
               deleteEvent={this.deleteEvent}
+              removeTechFromEvent={this.removeTechFromEvent}
             />
           )}
         </Grid>

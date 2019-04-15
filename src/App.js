@@ -8,6 +8,7 @@ import Navbar from "./Components/Navbar"
 import LoginForm from "./Components/LoginForm"
 import API from "./Adaptors/API"
 import Calendar from "./Components/Calendar"
+import EventDetails from "./Components/EventDetails"
 
 class App extends Component {
   state = {
@@ -42,15 +43,6 @@ class App extends Component {
   login = userObj => {
     API.login(userObj).then(this.handleUserResponse)
   }
-
-  // login = userObj => {
-  //   API.login(userObj)
-  //     .then(currentUser => {
-  //       this.setState({ currentUser })
-  //       this.props.history.push("/myaccount")
-  //     })
-  //     .catch(alert("Uh oh, somthing went wrong "))
-  // }
 
   render() {
     return (
@@ -109,6 +101,19 @@ class App extends Component {
             }}
           />
           <Route
+            exact
+            path='/events/:id/addtechnician'
+            component={routerProps => {
+              return (
+                <TechniciansContainer
+                  currentUser={this.state.currentUser}
+                  {...routerProps}
+                  addTechnician
+                />
+              )
+            }}
+          />
+          <Route
             path='/mycalendar'
             component={routerProps => {
               return (
@@ -125,6 +130,18 @@ class App extends Component {
             component={routerProps => {
               return (
                 <Calendar
+                  {...routerProps}
+                  currentUser={this.state.currentUser}
+                />
+              )
+            }}
+          />
+          <Route
+            exact
+            path='/events/:id/'
+            component={routerProps => {
+              return (
+                <EventDetails
                   {...routerProps}
                   currentUser={this.state.currentUser}
                 />

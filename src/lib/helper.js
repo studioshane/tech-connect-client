@@ -15,3 +15,14 @@ export const formatDate = date => {
 }
 
 export const disciplines = ["audio", "video", "lighting", "general"]
+
+export const sortDatesHighToLow = (a, b) => {
+  a = new Date(a.start)
+  b = new Date(b.start)
+  return a > b ? -1 : a < b ? 1 : 0
+}
+export const sortDatesLowToHigh = (a, b) => {
+  a = new Date(a.start)
+  b = new Date(b.start)
+  return a < b ? -1 : a > b ? 1 : 0
+}

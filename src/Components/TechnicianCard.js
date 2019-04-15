@@ -42,16 +42,34 @@ const TechnicianCard = props => {
             {general ? <InsertEmoticon /> : null}
           </ul>
         </CardContent>
-
-        <Button
-          component={Link}
-          to={`/technicians/${id}/calendar`}
-          variant='contained'
-          color='secondary'
-          align='center'
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "5px",
+            marginTop: "10px"
+          }}
         >
-          See Availability
-        </Button>
+          {props.addTechnician ? (
+            <Button
+              onClick={() => props.bookTechnician(id)}
+              variant='contained'
+              color='secondary'
+              align='center'
+            >
+              Book Technician
+            </Button>
+          ) : (
+            <Button
+              component={Link}
+              to={`/technicians/${id}/calendar`}
+              variant='contained'
+              color='secondary'
+            >
+              See Availability
+            </Button>
+          )}
+        </div>
       </Card>
     </div>
   )

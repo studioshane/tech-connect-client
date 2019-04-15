@@ -39,7 +39,7 @@ class LoginForm extends React.Component {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Sign Up
+            Log in
           </Typography>
           <form onSubmit={this.handleSubmit} className={classes.form}>
             <FormControl margin='normal' required fullWidth>

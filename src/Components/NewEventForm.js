@@ -56,7 +56,6 @@ export default class NewEventForm extends React.Component {
         >
           <DialogTitle id='form-dialog-title'>Create New Event</DialogTitle>
           <DialogContent onChange={this.handleChange}>
-            <DialogContentText>this will be a new event form</DialogContentText>
             <TextField
               margin='dense'
               label='Client'

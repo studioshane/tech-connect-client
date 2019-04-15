@@ -21,7 +21,9 @@ class DeleteEventDialog extends React.Component {
           aria-describedby='alert-dialog-description'
         >
           <DialogTitle id='alert-dialog-title'>
-            {"Are you sure you want to delete this event?"}
+            {!this.props.isTech
+              ? "Are you sure you want to delete this event?"
+              : "Are you sure you wish to be removed from this event?"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id='alert-dialog-description'>
@@ -32,9 +34,15 @@ class DeleteEventDialog extends React.Component {
             <Button onClick={this.handleClose} color='primary' autoFocus>
               Cancel
             </Button>
-            <Button onClick={this.props.deleteEvent} color='primary'>
-              Delete Event
-            </Button>
+            {!this.props.isTech ? (
+              <Button onClick={this.props.deleteEvent} color='primary'>
+                Delete Event
+              </Button>
+            ) : (
+              <Button onClick={this.props.removeTechFromEvent} color='primary'>
+                Cancel Event
+              </Button>
+            )}
           </DialogActions>
         </Dialog>
       </div>

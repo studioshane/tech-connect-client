@@ -7,10 +7,11 @@ import CardContent from "@material-ui/core/CardContent"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import { formatDate } from "../lib/helper"
+import { Link } from "react-router-dom"
 
 const styles = {
   card: {
-    minWidth: 275
+    minWidth: 500
   },
   bullet: {
     display: "inline-block",
@@ -32,26 +33,32 @@ function EventCard(props) {
   return (
     <div>
       <Card
-        style={{ minWidth: "230px", maxWidth: "300px", minHeight: "280px" }}
+        style={{ minWidth: "280px", maxWidth: "300px", minHeight: 200 }}
         className={classes.card}
       >
         <CardContent>
           <Typography
+            noWrap
             className={classes.title}
             color='textSecondary'
             gutterBottom
           >
-            {props.is_tech ? event.title : event.client}
+            {props.isTech ? event.title : event.client}
           </Typography>
-          <Typography variant='h5' component='h2'>
+          <Typography noWrap variant='h5' component='h2'>
             {event.venue}
           </Typography>
           <Typography className={classes.pos} color='textSecondary'>
             {formatDate(event.start)} - {formatDate(event.end)}
           </Typography>
+          <Typography className={classes.pos} color='textSecondary'>
+            Technicians {event.technicians.length}/{event.techs_required}
+          </Typography>
         </CardContent>
         <CardActions>
-          <Button size='small'>More Details</Button>
+          <Button component={Link} to={`/events/${event.id}`} size='small'>
+            More Details
+          </Button>
           <Button onClick={() => props.showDeleteDialog(event.id)} size='small'>
             {props.isTech ? "Cancel Event" : "Delete Event"}
           </Button>
