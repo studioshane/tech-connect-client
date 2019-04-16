@@ -98,7 +98,7 @@ class MyAccountContainer extends Component {
         >
           {currentUser ? (
             this.sortedEvents(events).map(eventDetails => (
-              <Grid key={eventDetails.id} item xs={6} sm={4} lg={3}>
+              <Grid key={eventDetails.id} item s={6} m={4} lg={3}>
                 <EventCard
                   isTech={currentUser.is_technician}
                   showDeleteDialog={this.showDeleteDialog}

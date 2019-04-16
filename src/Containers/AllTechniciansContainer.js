@@ -76,9 +76,9 @@ class AllTechniciansContainer extends Component {
     )
   }
 
-  // handleChange = event => {
-  //   this.setState({ disciplineFilters: event.target.value })
-  // }
+  handleFilter = event => {
+    console.log(event.target.name)
+  }
 
   render() {
     return (
@@ -107,22 +107,24 @@ class AllTechniciansContainer extends Component {
           {popupState => (
             <React.Fragment>
               <Button variant='contained' {...bindTrigger(popupState)}>
-                Open Menu
+                Filter by Discipline
               </Button>
               <Menu {...bindMenu(popupState)}>
-                <MenuItem onClick={popupState.close}>Cake</MenuItem>
-                <MenuItem onClick={popupState.close}>Death</MenuItem>
+                {disciplines.map(discipline => (
+                  <MenuItem name={discipline} onClick={this.handleFilter}>
+                    {discipline}
+                  </MenuItem>
+                ))}
               </Menu>
             </React.Fragment>
           )}
         </PopupState>
-
         <Grid container spacing={24} style={{ padding: 24 }}>
           {this.state.loading ? (
             <CircularProgress style={{ margin: "auto" }} align='center' />
           ) : (
             this.searchByName().map(currentTech => (
-              <Grid key={currentTech.id} item xs={6} sm={4} lg={3}>
+              <Grid key={currentTech.id} item item s={6} m={4} lg={3}>
                 <TechnicianCard
                   bookTechnician={this.bookTechnician}
                   addTechnician={this.props.addTechnician}

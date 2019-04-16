@@ -16,10 +16,15 @@ const TechnicianCard = props => {
     lighting
   } = props.tech
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center"
+      }}
+    >
       <Card
         raised={true}
-        style={{ minWidth: "230px", maxWidth: "300px", minHeight: "280px" }}
+        style={{ minWidth: "300px", maxWidth: "300px", minHeight: "280px" }}
       >
         <CardContent>
           <Typography
@@ -47,7 +52,8 @@ const TechnicianCard = props => {
             display: "flex",
             justifyContent: "center",
             marginBottom: "5px",
-            marginTop: "10px"
+            marginTop: "10px",
+            marginLeft: "10px"
           }}
         >
           {props.addTechnician ? (

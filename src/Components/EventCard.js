@@ -33,6 +33,7 @@ function EventCard(props) {
   return (
     <div>
       <Card
+        raised
         style={{ minWidth: "280px", maxWidth: "300px", minHeight: 200 }}
         className={classes.card}
       >
@@ -56,12 +57,17 @@ function EventCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button component={Link} to={`/events/${event.id}`} size='small'>
-            More Details
-          </Button>
-          <Button onClick={() => props.showDeleteDialog(event.id)} size='small'>
-            {props.isTech ? "Cancel Event" : "Delete Event"}
-          </Button>
+          <span>
+            <Button component={Link} to={`/events/${event.id}`} size='small'>
+              More Details
+            </Button>
+            <Button
+              onClick={() => props.showDeleteDialog(event.id)}
+              size='small'
+            >
+              {props.isTech ? "Cancel Event" : "Delete Event"}
+            </Button>
+          </span>
         </CardActions>
       </Card>
     </div>

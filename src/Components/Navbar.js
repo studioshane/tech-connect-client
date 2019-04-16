@@ -1,17 +1,13 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
-import {
-  withStyles,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton
-} from "@material-ui/core"
+import { withStyles, Toolbar, Button } from "@material-ui/core"
 import AppBar from "@material-ui/core/AppBar"
-import MenuIcon from "@material-ui/icons/Menu"
 import styles from "../Config/config"
 import { firstName } from "../lib/helper"
+import "../App.css"
+import { navbutton } from "../Styles/styles"
+import classnames from "classnames"
 
 class Navbar extends Component {
   state = {}
@@ -21,51 +17,66 @@ class Navbar extends Component {
       <div className={classes.root}>
         <AppBar position='static'>
           <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color='inherit'
-              aria-label='Menu'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component={Link}
-              to='/myaccount'
-              variant='h6'
-              color='inherit'
-              className={classes.grow}
-            >
-              {user ? "My Account" : ""}
-            </Typography>
-            {user ? (
-              <Button component={Link} to='/mycalendar' color='inherit'>
-                My Calendar
-              </Button>
-            ) : null}
-            {
-              <Button component={Link} to='/technicians' color='inherit'>
-                Find Technicians
-              </Button>
-            }
-            {user ? (
+            <div style={{ display: "inline-flex", width: "60%" }}>
               <Button
+                noWrap
+                style={navbutton}
+                className='navbutton'
                 component={Link}
-                to='/login'
-                onClick={logout}
+                to='/myaccount'
+                variant='h6'
                 color='inherit'
+                // className={classes.grow}
               >
-                Log Out {firstName(user.name)}
+                {user && "My Events"}
               </Button>
-            ) : (
-              <div>
-                <Button component={Link} to='/login' color='inherit'>
-                  Login
+              {user ? (
+                <Button
+                  noWrap
+                  style={navbutton.avatar}
+                  className='navbutton'
+                  component={Link}
+                  to='/mycalendar'
+                  color='inherit'
+                >
+                  My Calendar
                 </Button>
-                <Button component={Link} to='/signup' color='inherit'>
-                  Sign Up
+              ) : null}
+              {user ? (
+                <Button
+                  noWrap
+                  style={navbutton.avatar}
+                  className='navbutton'
+                  component={Link}
+                  to='/technicians'
+                  color='inherit'
+                >
+                  Find Technicians
                 </Button>
-              </div>
-            )}
+              ) : null}
+            </div>
+            <div style={{ position: "absolute", right: "40px" }}>
+              {user ? (
+                <Button
+                  style={{ leftMargin: "10px" }}
+                  component={Link}
+                  to='/login'
+                  onClick={logout}
+                  color='inherit'
+                >
+                  Log Out {firstName(user.name)}
+                </Button>
+              ) : (
+                <div>
+                  <Button component={Link} to='/login' color='inherit'>
+                    Login
+                  </Button>
+                  <Button component={Link} to='/signup' color='inherit'>
+                    Sign Up
+                  </Button>
+                </div>
+              )}
+            </div>
           </Toolbar>
         </AppBar>
       </div>
