@@ -7,7 +7,7 @@ import API from "../Adaptors/API"
 import NewEventForm from "./NewEventForm"
 const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
 
-let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
+// let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
 class Calendar extends React.Component {
   state = {

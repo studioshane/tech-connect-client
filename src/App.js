@@ -9,17 +9,6 @@ import LoginForm from "./Components/LoginForm"
 import API from "./Adaptors/API"
 import Calendar from "./Components/Calendar"
 import EventDetails from "./Components/EventDetails"
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider"
-import { createMuiTheme } from "@material-ui/core/styles"
-
-let imgUrl = "./images/background.jpg"
-let styles = {
-  root: {
-    backgroundImage: `url(${imgUrl})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center"
-  }
-}
 
 class App extends Component {
   state = {
@@ -59,108 +48,106 @@ class App extends Component {
     return (
       <Fragment>
         <Navbar logout={this.logout} user={this.state.currentUser} />
-        <MuiThemeProvider style={styles}>
-          <Switch>
-            <Route
-              exact
-              path='/signup'
-              component={routerProps => {
-                return (
-                  <SignUpForm
-                    signUp={this.signUp}
-                    {...routerProps}
-                    currentUser={this.state.currentUser}
-                  />
-                )
-              }}
-            />
-            <Route
-              exact
-              path='/login'
-              component={routerProps => {
-                return (
-                  <LoginForm
-                    {...routerProps}
-                    login={this.login}
-                    currentUser={this.state.currentUser}
-                  />
-                )
-              }}
-            />
-            <Route
-              exact
-              path='/myaccount'
-              component={routerProps => {
-                return (
-                  <MyAccountContainer
-                    currentUser={this.state.currentUser}
-                    {...routerProps}
-                  />
-                )
-              }}
-            />
-            <Route
-              exact
-              path='/technicians'
-              component={routerProps => {
-                return (
-                  <TechniciansContainer
-                    currentUser={this.state.currentUser}
-                    {...routerProps}
-                  />
-                )
-              }}
-            />
-            <Route
-              exact
-              path='/events/:id/addtechnician'
-              component={routerProps => {
-                return (
-                  <TechniciansContainer
-                    currentUser={this.state.currentUser}
-                    {...routerProps}
-                    addTechnician
-                  />
-                )
-              }}
-            />
-            <Route
-              path='/mycalendar'
-              component={routerProps => {
-                return (
-                  <Calendar
-                    currentUser={this.state.currentUser}
-                    {...routerProps}
-                  />
-                )
-              }}
-            />
-            <Route
-              exact
-              path='/technicians/:id/calendar'
-              component={routerProps => {
-                return (
-                  <Calendar
-                    {...routerProps}
-                    currentUser={this.state.currentUser}
-                  />
-                )
-              }}
-            />
-            <Route
-              exact
-              path='/events/:id/'
-              component={routerProps => {
-                return (
-                  <EventDetails
-                    {...routerProps}
-                    currentUser={this.state.currentUser}
-                  />
-                )
-              }}
-            />
-          </Switch>
-        </MuiThemeProvider>
+        <Switch>
+          <Route
+            exact
+            path='/signup'
+            component={routerProps => {
+              return (
+                <SignUpForm
+                  signUp={this.signUp}
+                  {...routerProps}
+                  currentUser={this.state.currentUser}
+                />
+              )
+            }}
+          />
+          <Route
+            exact
+            path='/login'
+            component={routerProps => {
+              return (
+                <LoginForm
+                  {...routerProps}
+                  login={this.login}
+                  currentUser={this.state.currentUser}
+                />
+              )
+            }}
+          />
+          <Route
+            exact
+            path='/myaccount'
+            component={routerProps => {
+              return (
+                <MyAccountContainer
+                  currentUser={this.state.currentUser}
+                  {...routerProps}
+                />
+              )
+            }}
+          />
+          <Route
+            exact
+            path='/technicians'
+            component={routerProps => {
+              return (
+                <TechniciansContainer
+                  currentUser={this.state.currentUser}
+                  {...routerProps}
+                />
+              )
+            }}
+          />
+          <Route
+            exact
+            path='/events/:id/addtechnician'
+            component={routerProps => {
+              return (
+                <TechniciansContainer
+                  currentUser={this.state.currentUser}
+                  {...routerProps}
+                  addTechnician
+                />
+              )
+            }}
+          />
+          <Route
+            path='/mycalendar'
+            component={routerProps => {
+              return (
+                <Calendar
+                  currentUser={this.state.currentUser}
+                  {...routerProps}
+                />
+              )
+            }}
+          />
+          <Route
+            exact
+            path='/technicians/:id/calendar'
+            component={routerProps => {
+              return (
+                <Calendar
+                  {...routerProps}
+                  currentUser={this.state.currentUser}
+                />
+              )
+            }}
+          />
+          <Route
+            exact
+            path='/events/:id/'
+            component={routerProps => {
+              return (
+                <EventDetails
+                  {...routerProps}
+                  currentUser={this.state.currentUser}
+                />
+              )
+            }}
+          />
+        </Switch>
       </Fragment>
     )
   }

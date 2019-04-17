@@ -1,29 +1,15 @@
 import React, { Component } from "react"
 import API from "../Adaptors/API"
 import TechnicianCard from "../Components/TechnicianCard"
-import {
-  TextField,
-  Grid,
-  Typography,
-  InputLabel,
-  Button,
-  Menu,
-  MenuItem
-} from "@material-ui/core"
+import { TextField, Grid, Typography } from "@material-ui/core"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Search from "@material-ui/icons/Search"
-import { disciplines } from "../lib/helper"
-import PopupState, {
-  bindTrigger,
-  bindMenu
-} from "material-ui-popup-state/index"
 
 class AllTechniciansContainer extends Component {
   state = {
     allTechnicians: [],
     searchField: "",
-    loading: true,
-    disciplineFilters: []
+    loading: true
   }
 
   componentDidMount = () => {
@@ -103,28 +89,12 @@ class AllTechniciansContainer extends Component {
           <Search />
         </TextField>
 
-        <PopupState variant='popover' popupId='demo-popup-menu'>
-          {popupState => (
-            <React.Fragment>
-              <Button variant='contained' {...bindTrigger(popupState)}>
-                Filter by Discipline
-              </Button>
-              <Menu {...bindMenu(popupState)}>
-                {disciplines.map(discipline => (
-                  <MenuItem name={discipline} onClick={this.handleFilter}>
-                    {discipline}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </React.Fragment>
-          )}
-        </PopupState>
         <Grid container spacing={24} style={{ padding: 24 }}>
           {this.state.loading ? (
             <CircularProgress style={{ margin: "auto" }} align='center' />
           ) : (
             this.searchByName().map(currentTech => (
-              <Grid key={currentTech.id} item item s={6} m={4} lg={3}>
+              <Grid key={currentTech.id} item s={6} m={4} lg={3}>
                 <TechnicianCard
                   bookTechnician={this.bookTechnician}
                   addTechnician={this.props.addTechnician}

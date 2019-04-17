@@ -7,7 +7,6 @@ import styles from "../Config/config"
 import { firstName } from "../lib/helper"
 import "../App.css"
 import { navbutton } from "../Styles/styles"
-import classnames from "classnames"
 
 class Navbar extends Component {
   state = {}
@@ -19,12 +18,10 @@ class Navbar extends Component {
           <Toolbar>
             <div style={{ display: "inline-flex", width: "60%" }}>
               <Button
-                noWrap
                 style={navbutton}
                 className='navbutton'
                 component={Link}
                 to='/myaccount'
-                variant='h6'
                 color='inherit'
                 // className={classes.grow}
               >
@@ -32,7 +29,6 @@ class Navbar extends Component {
               </Button>
               {user ? (
                 <Button
-                  noWrap
                   style={navbutton.avatar}
                   className='navbutton'
                   component={Link}
@@ -44,7 +40,6 @@ class Navbar extends Component {
               ) : null}
               {user ? (
                 <Button
-                  noWrap
                   style={navbutton.avatar}
                   className='navbutton'
                   component={Link}

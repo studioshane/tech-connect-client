@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import API from "../Adaptors/API"
 import EventCard from "../Components/EventCard"
 import DeleteEventDialog from "../Components/DeleteEventDialog"
-import { Typography, Grid, Button, Fab } from "@material-ui/core"
+import { Typography, Grid, Fab } from "@material-ui/core"
 import { sortDatesLowToHigh, sortDatesHighToLow } from "../lib/helper"
 
 class MyAccountContainer extends Component {

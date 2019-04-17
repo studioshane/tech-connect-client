@@ -57,11 +57,20 @@ function EventCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <span>
-            <Button component={Link} to={`/events/${event.id}`} size='small'>
+          <span style={{ margin: "auto" }}>
+            <Button
+              variant='contained'
+              color='secondary'
+              component={Link}
+              to={`/events/${event.id}`}
+              size='small'
+            >
               More Details
             </Button>
             <Button
+              style={{ marginLeft: "20px" }}
+              variant='contained'
+              color='secondary'
               onClick={() => props.showDeleteDialog(event.id)}
               size='small'
             >
