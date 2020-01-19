@@ -22,7 +22,6 @@ class MyAccountContainer extends Component {
     } else if (currentUser) {
       API.getProducerEvents(currentUser.id)
         .then(prodEvents => this.setState({ events: prodEvents }))
-        .then(console.log(this.state.events))
     }
   }
 

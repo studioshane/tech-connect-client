@@ -1,17 +1,18 @@
-import React, { Component } from "react"
-import PropTypes from "prop-types"
-import { Link } from "react-router-dom"
-import { withStyles, Toolbar, Button } from "@material-ui/core"
-import AppBar from "@material-ui/core/AppBar"
-import styles from "../Config/config"
-import { firstName } from "../lib/helper"
-import "../App.css"
-import { navbutton } from "../Styles/styles"
+/* eslint-disable indent */
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { withStyles, Toolbar, Button } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import styles from "../Config/config";
+import { firstName } from "../lib/helper";
+import "../App.css";
+import { navbutton } from "../Styles/styles";
 
 class Navbar extends Component {
   state = {}
   render() {
-    const { classes, user, logout } = this.props
+    const { classes, user, logout } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position='static'>
@@ -25,7 +26,7 @@ class Navbar extends Component {
                 color='inherit'
                 // className={classes.grow}
               >
-                {user && "My Events"}
+                My Events
               </Button>
               {user ? (
                 <Button
@@ -75,12 +76,12 @@ class Navbar extends Component {
           </Toolbar>
         </AppBar>
       </div>
-    )
+    );
   }
 }
 
 Navbar.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
-export default withStyles(styles.style)(Navbar)
+export default withStyles(styles.style)(Navbar);

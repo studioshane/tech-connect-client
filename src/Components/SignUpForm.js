@@ -80,104 +80,58 @@ class SignUpForm extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <main className={classes.main}>
-        <CssBaseline />
-        <Paper className={classes.paper}>
-          <Avatar color='inherit' className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component='h1' variant='h5'>
-            Sign Up
-          </Typography>
-          <form onSubmit={this.handleSubmit} className={classes.form}>
-            <RadioButtons
-              value={this.state.value}
-              handleSelect={this.handleSelect}
-            />
-            <FormControl margin='normal' required fullWidth>
-              <InputLabel htmlFor='email'>Email</InputLabel>
-              <Input
-                onChange={this.handleChange}
-                name='email'
-                autoComplete='email'
-              />
-            </FormControl>
-            <FormControl margin='normal' required fullWidth>
-              <InputLabel htmlFor='password'>Password</InputLabel>
-              <Input
-                onChange={this.handleChange}
-                name='password'
-                type='password'
-                id='password'
-                autoComplete='current-password'
-              />
-              <FormControl margin='normal' required fullWidth>
-                <InputLabel htmlFor='name'>Name</InputLabel>
-                <Input
-                  onChange={this.handleChange}
-                  name='name'
-                  autoComplete='name'
-                />
-              </FormControl>
-              <FormControl margin='normal' required fullWidth>
-                <InputLabel htmlFor='phone'>Phone</InputLabel>
-                <Input
-                  onChange={this.handleChange}
-                  name='phone'
-                  type='phone'
-                  id='tel'
-                />
-              </FormControl>
-              {this.state.value === "producer" ? (
-                <FormControl margin='normal' required fullWidth>
-                  <InputLabel htmlFor='company'>Company</InputLabel>
-                  <Input
-                    onChange={this.handleChange}
-                    name='company'
-                    autoComplete='company'
-                  />
-                </FormControl>
-              ) : (
-                <FormControl margin='normal' required fullWidth>
-                  <InputLabel htmlFor='day-rate'>Day Rate</InputLabel>
-                  <Input
-                    onChange={this.handleChange}
-                    name='day_rate'
-                    type='tel'
-                  />
-                </FormControl>
-              )}
-            </FormControl>
-            {this.state.value === "technician" ? (
-              <div>
-                {disciplineOptions.map(checkboxOptions => (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        onClick={this.handleToggle}
-                        value={checkboxOptions.value}
-                        color='primary'
-                        name={checkboxOptions.value}
-                      />
-                    }
-                    label={checkboxOptions.label}
-                  />
-                ))}
-              </div>
-            ) : null}
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    )
+		<main className={classes.main}>
+			<CssBaseline />
+			<Paper className={classes.paper}>
+				<Avatar color='inherit' className={classes.avatar}>
+					<LockOutlinedIcon />
+				</Avatar>
+				<Typography component='h1' variant='h5'>
+					Sign Up
+				</Typography>
+				<form onSubmit={this.handleSubmit} className={classes.form}>
+					<RadioButtons value={this.state.value} handleSelect={this.handleSelect} />
+					<FormControl margin='normal' required fullWidth>
+						<InputLabel htmlFor='email'>Email</InputLabel>
+						<Input onChange={this.handleChange} name='email' autoComplete='email' />
+					</FormControl>
+					<FormControl margin='normal' required fullWidth>
+						<InputLabel htmlFor='password'>Password</InputLabel>
+						<Input onChange={this.handleChange} name='password' type='password' id='password' autoComplete='current-password' />
+						<FormControl margin='normal' required fullWidth>
+							<InputLabel htmlFor='name'>Name</InputLabel>
+							<Input onChange={this.handleChange} name='name' autoComplete='name' />
+						</FormControl>
+						<FormControl margin='normal' required fullWidth>
+							<InputLabel htmlFor='phone'>Phone</InputLabel>
+							<Input onChange={this.handleChange} name='phone' type='phone' id='tel' />
+						</FormControl>
+						{this.state.value === 'producer' ? (
+							<FormControl margin='normal' required fullWidth>
+								<InputLabel htmlFor='company'>Company</InputLabel>
+								<Input onChange={this.handleChange} name='company' autoComplete='company' />
+							</FormControl>
+						) : (
+							<FormControl margin='normal' required fullWidth>
+								<InputLabel htmlFor='day-rate'>Day Rate</InputLabel>
+								<Input onChange={this.handleChange} name='day_rate' type='tel' />
+							</FormControl>
+						)}
+					</FormControl>
+					{this.state.value === 'technician' ? (
+						<div>
+							{disciplineOptions.map(checkboxOptions => (
+								<FormControlLabel key={checkboxOptions.label} control={<Checkbox onClick={this.handleToggle} value={checkboxOptions.value} color='primary' name={checkboxOptions.value} />} label={checkboxOptions.label} />
+							))}
+						</div>
+					) : null}
+					<Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
+						Sign Up
+					</Button>
+				</form>
+			</Paper>
+		</main>
+	);
   }
 }
 
